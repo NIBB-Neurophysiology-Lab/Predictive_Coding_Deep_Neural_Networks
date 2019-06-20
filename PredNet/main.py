@@ -141,9 +141,9 @@ if args.test == True:
             if args.gpu >= 0:model.to_cpu()
             write_image(x_batch[0].copy(), 'result/test_' + str(i) + 'x.jpg')
             write_image(model.y.data[0].copy(), 'result/test_' + str(i) + 'y_0.jpg')
-            if args.gpu >= 0:model.to_gpu()
             logf.write(str(i) + ', ' + str(float(model.loss.data)) + '\n')
             logf.flush()
+            if args.gpu >= 0:model.to_gpu()
 
             if i == 0 or (args.input_len > 0 and i % args.input_len != 0):
                 continue
@@ -195,10 +195,10 @@ else:
                 write_image(x_batch[0].copy(), 'images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'x.jpg')
                 write_image(model.y.data[0].copy(), 'images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'y.jpg')
                 write_image(y_batch[0].copy(), 'images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'z.jpg')
-                if args.gpu >= 0:model.to_gpu()
                 print('loss:' + str(float(model.loss.data)))
                 logf.write(str(i) + ', ' + str(float(model.loss.data)) + '\n')
                 logf.flush()
+                if args.gpu >= 0:model.to_gpu()
 
             if (count%args.save) == 0:
                 print('save the model')
