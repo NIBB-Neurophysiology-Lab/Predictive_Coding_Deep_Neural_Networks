@@ -53,6 +53,18 @@ Requirements
 
 
 ================================
+Reserved folder names @ root
+================================
+PredNet
+data
+models
+result
+xyz_images
+runs
+
+
+
+================================
 Preparing data
 ================================
 Put the target movie file (mp4) in "data" folder.
@@ -112,6 +124,8 @@ Furthermore, for each length of the input image, images (test_#y_1.jpg, test_#y_
 ================================
 Options
 ================================
+parser = argparse.ArgumentParser(
+description='PredNet')
 parser.add_argument('--images', '-i', default='', help='Path to image list file')
 parser.add_argument('--sequences', '-seq', default='', help='Path to sequence list file')
 parser.add_argument('--gpu', '-g', default=-1, type=int,
@@ -138,7 +152,11 @@ parser.add_argument('--save', default=10000, type=int,
                     help='Period of save model and state (frames)')
 parser.add_argument('--period', default=1000000, type=int,
                     help='Period of training (frames)')
+parser.add_argument('--xyz', default=0, type=int,
+                    help='Save xyz_images, --xyz 1')
 parser.add_argument('--test', dest='test', action='store_true')
+parser.set_defaults(test=False)
+args = parser.parse_args()
 
 
 
@@ -147,8 +165,8 @@ How to Use Tensorboard
 ================================
 This version has omitted Tensorboard function.
 
-When you want to use the function of Tensorboard,
-see 
+When you want the function of Tensorboard,
+use 
 https://doi.org/10.6084/m9.figshare.7801154
 
 
@@ -156,10 +174,15 @@ https://doi.org/10.6084/m9.figshare.7801154
 ================================
 Reference
 ================================
-"https://github.com/neka-nat/" [Powered by Tanaka]
-
+"https://github.com/neka-nat/" [Powered by Kenta Tanaka]
 "https://coxlab.github.io/prednet/" [Original PredNet]
 "https://github.com/quadjr/PredNet" [Implemented by chainer]
+
+"https://doi.org/10.3389/fpsyg.2018.00345" [Reference Paper]
+Watanabe E, Kitaoka A, Sakamoto K, Yasugi M and Tanaka K (2018)
+Illusory Motion Reproduced by Deep Neural Networks Trained for Prediction.
+Front. Psychol. 9:345. doi: 10.3389/fpsyg.2018.00345
+
 
 
 
