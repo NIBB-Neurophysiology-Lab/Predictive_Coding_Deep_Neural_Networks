@@ -31,7 +31,7 @@ while True:
   success, image = vidcap.read()
   if not success:
     break
-  files.append(os.path.join(args.dir, "%s_%05d.jpg" % (args.prefix, count)))
+  files.append(os.path.join(args.dir, "%s_%08d.jpg" % (args.prefix, count)))
   sys.stdout.write('\rSave {}'.format(files[-1]))
   sys.stdout.flush()
   if args.width > 0:
