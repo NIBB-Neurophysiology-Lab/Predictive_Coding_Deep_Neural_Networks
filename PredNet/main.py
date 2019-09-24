@@ -1,4 +1,4 @@
-# Simple version
+# Simple version 10 (bugfix: period option and pridiction loss)
 
 import argparse
 import os
@@ -136,9 +136,10 @@ if args.test == True:
         x_batch = np.ndarray((batchSize, args.channels[0], args.size[1], args.size[0]), dtype=np.float32)
         y_batch = np.ndarray((batchSize, args.channels[0], args.size[1], args.size[0]), dtype=np.float32)
         
-        for i in range(0, len(imagelist)):
+        for i in range(0, len(imagelist) - 1):
             print('frameNo:' + str(i))
             x_batch[0] = read_image(imagelist[i])
+            y_batch[0] = read_image(imagelist[i + 1])
             loss += model(chainer.Variable(xp.asarray(x_batch)),
                           chainer.Variable(xp.asarray(y_batch)))
             loss.unchain_backward()
@@ -180,10 +181,13 @@ else:
         batchSize = 1
         x_batch = np.ndarray((batchSize, args.channels[0], args.size[1], args.size[0]), dtype=np.float32)
         y_batch = np.ndarray((batchSize, args.channels[0], args.size[1], args.size[0]), dtype=np.float32)
+        
         if len(imagelist) == 0:
             print("Not found images.")
             break
+            
         x_batch[0] = read_image(imagelist[0]);
+        
         for i in range(1, len(imagelist)):
             y_batch[0] = read_image(imagelist[i]);
             loss += model(chainer.Variable(xp.asarray(x_batch)),
@@ -196,13 +200,14 @@ else:
                 loss.unchain_backward()
                 loss = 0
                 optimizer.update()
+                
                 if args.gpu >= 0:model.to_cpu()
                 
                 if args.xyz == 1:
 					write_image(x_batch[0].copy(), 'xyz_images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'x.jpg')
 					write_image(model.y.data[0].copy(), 'xyz_images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'y.jpg')
 					write_image(y_batch[0].copy(), 'xyz_images/' + str(count) + '_' + str(seq) + '_' + str(i) + 'z.jpg')
-         			
+                
                 print('loss:' + str(float(model.loss.data)))
                 logf.write(str(i) + ', ' + str(float(model.loss.data)) + '\n')
                 logf.flush()
@@ -215,6 +220,8 @@ else:
                 serializers.save_npz('models/' + str(count) + '.state', optimizer)
 
             x_batch[0] = y_batch[0]
+            if count > args.period:
+                break
             count += 1
         
         seq = (seq + 1)%len(sequencelist)
