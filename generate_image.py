@@ -22,6 +22,8 @@ parser.add_argument('-w', '--width', action='store',
 parser.add_argument('-g', '--height', action='store',
                     default=-1, type=int, help='height of images.')
 args = parser.parse_args()
+
+
 vidcap = cv2.VideoCapture(args.input_video)
 success, image = vidcap.read()
 count = 0
@@ -31,7 +33,7 @@ while True:
   success, image = vidcap.read()
   if not success:
     break
-  files.append(os.path.join(args.dir, "%s_%05d.jpg" % (args.prefix, count)))
+  files.append(os.path.join(args.dir, "%s_%07d.jpg" % (args.prefix, count)))
   sys.stdout.write('\rSave {}'.format(files[-1]))
   sys.stdout.flush()
   if args.width > 0:

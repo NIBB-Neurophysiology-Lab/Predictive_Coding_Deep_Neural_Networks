@@ -4,7 +4,7 @@
 ================================
 PredNet in chainer
 ================================
-Kenta Tanaka & Eiji Watanabe, 2019
+Kenta Tanaka & Eiji Watanabe, 2020
 
 
 
@@ -21,7 +21,7 @@ Test environment
 OS: Ubuntu 16.04
 Python: 2.7
 GPU: Nvidia GTX1080ti
-chainer==5.30
+chainer==5.40
 
 
 
@@ -81,6 +81,7 @@ With -n option, you can copy n frames of the same frame.
 
 
 
+
 ================================
 Training
 ================================
@@ -94,6 +95,17 @@ $ python PredNet/main.py -i data/train_list.txt -g 0
 
 The learning models are saved in "models folder"
  and the generated images are saved "image folder".
+
+
+If you have multiple "train_list.txt"s,
+use sequence_list.txt in which directories of "train_list.txt"s are written as follows:
+data1/train_list.txt
+data2/train_list.txt
+data3/train_list.txt
+data4/train_list.txt
+....
+and then, execute the following command.
+$ python PredNet/main.py -seq sequence_list.txt -g 0
 
 
 
@@ -143,6 +155,24 @@ parser.add_argument('--test', dest='test', action='store_true')
 
 
 ================================
+How to Use csv_serializer.py
+================================
+You can convert weight model files (npz) to csv files by csv_serializer.
+
+#npz_to_csv
+python PredNet/csv_serializer.py npz_to_csv models/YOUR.model
+You can find csv files in test folder.
+
+#csv_to_npz
+python PredNet/csv_serializer.py csv_to_npz models/test.model
+Csv files in test folder will be converted to test.model.
+
+csv_serializer.py has some args options.
+================================
+
+
+
+================================
 How to Use Tensorboard
 ================================
 This version has omitted Tensorboard function.
@@ -157,7 +187,6 @@ https://doi.org/10.6084/m9.figshare.7801154
 Reference
 ================================
 "https://github.com/neka-nat/" [Powered by Tanaka]
-
 "https://coxlab.github.io/prednet/" [Original PredNet]
 "https://github.com/quadjr/PredNet" [Implemented by chainer]
 

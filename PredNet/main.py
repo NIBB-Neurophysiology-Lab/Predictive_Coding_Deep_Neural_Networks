@@ -126,6 +126,8 @@ if args.images:
 else:
     sequencelist = load_list(args.sequences, args.root)
 
+print('save the initial model')
+serializers.save_npz('models/initial.model', model)
 if args.test == True:
     logf = open('loss_prediction.txt', 'w')
     for seq in range(len(sequencelist)):
@@ -186,10 +188,10 @@ else:
             print("Not found images.")
             break
             
-        x_batch[0] = read_image(imagelist[0]);
+        x_batch[0] = read_image(imagelist[0])
         
         for i in range(1, len(imagelist)):
-            y_batch[0] = read_image(imagelist[i]);
+            y_batch[0] = read_image(imagelist[i])
             loss += model(chainer.Variable(xp.asarray(x_batch)),
                           chainer.Variable(xp.asarray(y_batch)))
 
