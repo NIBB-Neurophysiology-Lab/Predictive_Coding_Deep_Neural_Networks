@@ -75,8 +75,9 @@ def load_from_csv(directory, model):
     d = serializers.NpzDeserializer(dic_params)
     d.load(model)
 
-"""
-def check_converter(npz_data=np.load("models/initial.model")):
+
+def check_converter():
+    npz_data = np.load("models/initial.model")
     print("Start checking...")
     npz_to_csv("test", npz_data)
     params = csv_to_npz("test")
@@ -88,7 +89,6 @@ def check_converter(npz_data=np.load("models/initial.model")):
                 print(params[k], v)
         else:
             raise ValueError("Fail checking.")
-"""
 
 if __name__ == "__main__":
     # check_converter()

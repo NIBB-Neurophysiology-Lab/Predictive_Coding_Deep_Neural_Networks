@@ -21,7 +21,7 @@ Test environment
 OS: Ubuntu 16.04
 Python: 2.7
 GPU: Nvidia GTX1080ti
-chainer==5.40
+chainer==6.7.0
 
 
 
@@ -58,25 +58,25 @@ Preparing data
 Put the target movie file (mp4) in "data" folder.
 Execute the following command to generate still images from the movie.
 
-$ python generate_image.py data/YOUR_VIDEO -d data
+$ python PredNet/generate_image.py data/YOUR_VIDEO -d data
 
 To change the width of the image, use the -w option.
 
-$ python generate_image.py data/YOUR_VIDEO -d data -w 160
+$ python PredNet/generate_image.py data/YOUR_VIDEO -d data -w 160
 
 The height can also be specified with -g option.
 
-$ python generate_image.py data/YOUR_VIDEO -d data -w 160 -g 120
+$ python PredNet/generate_image.py data/YOUR_VIDEO -d data -w 160 -g 120
 
 If no option is specified, the width is fixed to 160 and the height is fixed to 120.
 Also, "train_list.txt" describing the list of files used for training
 and "test_list.txt" describing the list of files used for testing are saved.
 By default, the latter half of the video will be the test data.
 
-$ python generate_image.py data/YOUR_VIDEO -d data -s 100
+$ python PredNet/generate_image.py data/YOUR_VIDEO -d data -s 100
 You can specify the number of frames to skip with -s option.
 
-$ python generate_image.py data/YOUR_VIDEO -d data -n 50
+$ python PredNet/generate_image.py data/YOUR_VIDEO -d data -n 50
 With -n option, you can copy n frames of the same frame.
 
 
